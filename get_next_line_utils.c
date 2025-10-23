@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gumunoz <gumunoz@student.42madrid.com      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/21 15:37:15 by gumunoz           #+#    #+#             */
+/*   Updated: 2025/10/21 15:37:23 by gumunoz          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "get_next_line.h"
 
@@ -70,6 +80,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	s3[i] = '\0';
 	return (s3);
 }
+
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	size_t	real_len;
@@ -95,4 +106,3 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	m[j] = '\0';
 	return (m);
 }
-
