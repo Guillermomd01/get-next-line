@@ -41,22 +41,22 @@ char	*ft_strchr(const char *s, int c)
 	}
 	if ((char)c == '\0')
 		return ((char *)&s[i]);
-	return (0);
+	return (NULL);
 }
 
 char	*ft_strdup(const char *s)
 {
-	size_t		l;
-	char		*m;
+	size_t		len;
+	char		*dup;
 
-	if (s == NULL)
+	if (!s)
 		return (NULL);
-	l = ft_strlen(s) +1;
-	m = malloc(l);
-	if (!m)
+	len = ft_strlen(s) +1;
+	dup = malloc(len);
+	if (!dup)
 		return (NULL);
-	ft_strlcpy(m, s, l);
-	return (m);
+	ft_strlcpy(dup, s, len);
+	return (dup);
 }
 
 char	*ft_strjoin(char const *s1, char const *s2)
