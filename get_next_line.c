@@ -41,7 +41,6 @@ char	*leftover_line(char *buffer)
 	if (buffer[i] != '\n')
 	{
 		free(buffer);
-		buffer = NULL;
 		return (NULL);
 	}
 	left_line = ft_substr(buffer, i + 1, ft_strlen(buffer) - (i + 1));
@@ -73,29 +72,30 @@ char	*read_until_newline(int fd, char *buffer)
 {
 	char	*temp;
 	int		bytes;
-	char	*tempbuffer;
+	char	*newbuffer;
 
-	if (!buffer)
-		buffer = ft_strdup("");
 	temp = malloc(BUFFER_SIZE + 1);
 	if (!temp)
 		return (NULL);
 	bytes = 1;
 	while (!ft_strchr(buffer, '\n') && bytes > 0)
 	{
-		tempbuffer = buffer;
 		bytes = read(fd, temp, BUFFER_SIZE);
-		if (bytes == -1)
-			return (free(temp),free(buffer),NULL);
+		if (bytes < 0)
+			return (free(temp), free(buffer), NULL);
 		temp[bytes] = '\0';
-		buffer = ft_strjoin(tempbuffer, temp);
-		free(tempbuffer);
+		if (bytes == 0)
+			break ;
+		if (!buffer)
+			buffer = ft_strdup("");
+		newbuffer = ft_strjoin(buffer, temp);
+		free(buffer);
+		buffer = newbuffer;
 		if (!buffer)
 			return (free(temp), NULL);
 	}
 	return (free(temp), buffer);
 }
-
 
 char	*get_next_line(int fd)
 {
@@ -117,6 +117,7 @@ char	*get_next_line(int fd)
 	buffer = leftover_line(buffer);
 	return (line);
 }
+
 	// #include <fcntl.h>
 	// #include <stdio.h>
 	// #include "get_next_line.h"
@@ -135,3 +136,36 @@ char	*get_next_line(int fd)
 	// 	close(fd);
 	// 	return 0;
 	// }
+// #include "get_next_line.h"
+// #include <fcntl.h>   // para open()
+// #include <stdio.h>   // para printf()
+// #include <stdlib.h>  // para free()
+
+// int	main(int argc, char **argv)
+// {
+// 	int		fd;
+// 	char	*line;
+// 	int		line_number;
+
+// 	if (argc != 2)
+// 	{
+// 		printf("Uso: %s <nombre_del_archivo>\n", argv[0]);
+// 		return (1);
+// 	}
+
+// 	fd = open(argv[1], O_RDONLY);
+// 	if (fd < 0)
+// 	{
+// 		perror("Error al abrir el archivo");
+// 		return (1);
+// 	}
+
+// 	line_number = 1;
+// 	while ((line = get_next_line(fd)) != NULL)
+// 	{
+// 		printf("Línea %d: %s", line_number++, line);
+// 		free(line);
+// 	}
+// 	close(fd);
+// 	return (0);
+// }
